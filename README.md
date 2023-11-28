@@ -25,9 +25,9 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 [My_Blog] <a name="about-project"></a>
+# 📖 [Recipe_app] <a name="about-project"></a>
 
-**[My_blog]** is a dynamic and interactive website that showcases a variety of posts. Users can engage with the content by adding comments and liking posts, fostering a vibrant community.
+**[Recipe_app]** keeps track of all your recipes, ingredients, and inventory. It will allow you to save ingredients, keep track of what you have, create recipes, and generate a shopping list based on what you have and what you are missing from a recipe. Also, since sharing recipes is an important part of cooking the app allows you to make them public so anyone can access them..
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -44,9 +44,9 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **[Showcase Posts]**
-- **[Add comments]**
-- **[Add likes]**
+- **[create recipe]**
+- **[generate shopping lists]**
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -70,7 +70,7 @@ Clone this repository to your desired folder:
 
 ```sh
   cd Blog app
-  git clone https://github.com/Zuwairanajma/Blog-App.git
+  git clone https://github.com/Armynerh/recipe_app.git
 ```
 
 ### Install
@@ -154,7 +154,7 @@ To run tests, run the following command:
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/Armynerh/my_blog/issues).
+Feel free to check the [issues page](https://github.com/Armynerh/recipe_app/issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
