@@ -1,0 +1,13 @@
+<h1>Your Recipes</h1>
+
+<% if @recipes.present? %>
+  <ul>
+    <% @recipes.each do |recipe| %>
+      <li>
+        <%= link_to recipe.title, user_recipe_path(recipe) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You haven't created any recipes yet.</p>
+<% end %>
