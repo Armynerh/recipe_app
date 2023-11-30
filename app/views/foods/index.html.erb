@@ -1,0 +1,16 @@
+<!-- app/views/foods/index.html.erb -->
+
+<ul>
+  <% if @foods.any? %>
+    <% @foods.each do |food| %>
+      <li>
+        <%= link_to food.name, food_path(food) %>
+        | <%= link_to 'Delete', food_path(food), method: :delete, data: { confirm: 'Are you sure?' } %>
+      </li>
+    <% end %>
+  <% else %>
+    <li>No foods available.</li>
+  <% end %>
+</ul>
+
+<%= link_to 'New Food', new_food_path, class: 'btn btn-primary' %>
