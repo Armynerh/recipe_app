@@ -8,10 +8,12 @@ class Recipe < ApplicationRecord
   validates :cooking_time, presence: true, numericality: { only_integer: true }
   validates :description, presence: true
   validates :user_id, presence: true
+  validates :public, inclusion: { in: [true, false] }
 
   def recipe_food_counts
     recipe_count = recipe_food.count
     price_sum = food.sum(:price)
-    { recipe_count:, price_sum: }
+    { recipe_count: recipe_count, price_sum: price_sum }
   end
+ 
 end

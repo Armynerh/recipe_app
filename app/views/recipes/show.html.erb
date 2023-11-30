@@ -1,0 +1,8 @@
+<h1><%= @recipe.name %></h1>
+
+<% if @recipe.public || (user_signed_in? && current_user == @recipe.user) %>
+  <%= button_to 'Toggle Public', toggle_public_recipe_path(@recipe), method: :post, class: 'btn btn-primary' if current_user == @recipe.user %>
+  <!-- Display other details of the recipe as needed -->
+<% else %>
+  <p>This recipe is private.</p>
+<% end %>

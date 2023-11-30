@@ -1,13 +1,18 @@
+<!-- app/views/user_recipes/index.html.erb -->
+
 <h1>Your Recipes</h1>
 
 <% if @recipes.present? %>
   <ul>
     <% @recipes.each do |recipe| %>
-      <li>
-        <%= link_to recipe.title, user_recipe_path(recipe) %>
-      </li>
-    <% end %>
+  <li>
+    <%= link_to recipe.name, recipe_path(recipe) %>
+    <%= link_to 'REMOVE', recipe_path(recipe), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  </li>
+<% end %>
   </ul>
 <% else %>
   <p>You haven't created any recipes yet.</p>
 <% end %>
+
+<%= link_to 'Create New Recipe', new_recipe_path, class: 'btn btn-success' %>
