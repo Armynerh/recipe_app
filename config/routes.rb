@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   resources :foods
   get '/general_shopping_list', to: 'general_shopping_list#index'
   resources :public_recipes, only: [:index]
-  resources :recipes, only: [:index, :show, :new, :create, :destroy, :update] do
+  resources :recipes, except: [:update] do
     resources :recipe_foods, only: [:new, :create, :destroy]
+    member do
+      post 'toggle_public'
+    end
   end
 end
