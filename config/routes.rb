@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   root "recipes#index"
 
   resources :foods, except: [:update]
-  get '/general_shopping_list', to: 'general_shopping_list#index'
+  get '/general_shopping_lists', to: 'general_shopping_lists#index'
   resources :public_recipes, only: [:index]
   resources :recipes, except: [:update] do
     resources :recipe_foods, only: [:new, :create, :destroy]
