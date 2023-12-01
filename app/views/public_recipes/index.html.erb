@@ -1,0 +1,17 @@
+<!-- app/views/public_recipes/index.html.erb -->
+<h1>List of Public Recipes</h1>
+
+<ul>
+  <% @public_recipes.each do |recipe| %>
+    <li>
+      <%= link_to recipe.name, public_recipe_path(recipe) %>
+      <% if current_user == recipe.user %>
+        | <%= link_to 'Delete', public_recipe_path(recipe), method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+      <br>
+      <strong>Total Food Items:</strong> <%= recipe.total_food_items %><br>
+      <strong>Total Price:</strong> <%= number_to_currency(recipe.total_price) %>
+       <strong>Created by:</strong> <%= recipe.user.name %>
+    </li>
+  <% end %>
+</ul>

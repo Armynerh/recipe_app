@@ -1,8 +1,43 @@
 <h1><%= @recipe.name %></h1>
+<% if current_user == @recipe.user || @recipe.public %>
+  <p>
+    <strong>Preparation Time:</strong> <%= @recipe.preparation_time %> minutes<br>
+    <strong>Cooking Time:</strong> <%= @recipe.cooking_time %> minutes<br>
+    <strong>Public:</strong> <%= @recipe.public ? 'Yes' : 'No' %><br>
+  </p>
+  <%= button_to toggle_public_recipe_path(@recipe), method: :post, class: @recipe.public ? 'public' : 'private' do %>
+    <%= @recipe.public ? 'Make Private' : 'Make Public' %>
+  <% end %>
 
-<% if @recipe.public || (user_signed_in? && current_user == @recipe.user) %>
-  <%= button_to 'Toggle Public', toggle_public_recipe_path(@recipe), method: :post, class: 'btn btn-primary' if current_user == @recipe.user %>
-  <!-- Display other details of the recipe as needed -->
+  <% if current_user == @recipe.user %>
+    <%= button_to new_recipe_recipe_food_path(@recipe), class: 'button' do %>
+      Add Ingredients
+    <% end %>
+    <table>
+      <thead>
+        <tr>
+          <th>Food</th>
+          <th>Quantity</th>
+          <th>Value (Price)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recipe.recipe_foods.each do |recipe_food| %>
+          <tr>
+            <td><%= recipe_food.food.name %></td>
+            <td><%= recipe_food.quantity %></td>
+            <td><%= number_to_currency(recipe_food.food.price) %></td>
+            <td>
+              <%= button_to 'Modify', edit_recipe_food_path(recipe_food), class: 'button' %>
+              <%= button_to 'Remove', recipe_food_path(recipe_food), method: :delete, class: 'button', data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 <% else %>
   <p>This recipe is private.</p>
 <% end %>
+<%= link_to 'Back', recipes_path %>
