@@ -10,15 +10,13 @@
   <% end %>
 
   <% if current_user == @recipe.user %>
-    <%= button_to new_recipe_recipe_food_path(@recipe), class: 'button' do %>
-      Add Ingredients
-    <% end %>
+    <%= link_to 'Add Ingredients', new_recipe_recipe_food_path(@recipe), class: 'btn-link' %>
     <table>
       <thead>
         <tr>
           <th>Food</th>
           <th>Quantity</th>
-          <th>Value (Price)</th>
+          <th>Value</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -27,11 +25,13 @@
           <tr>
             <td><%= recipe_food.food.name %></td>
             <td><%= recipe_food.quantity %></td>
-            <td><%= number_to_currency(recipe_food.food.price) %></td>
-            <td>
-              <%= button_to 'Modify', edit_recipe_food_path(recipe_food), class: 'button' %>
-              <%= button_to 'Remove', recipe_food_path(recipe_food), method: :delete, class: 'button', data: { confirm: 'Are you sure?' } %>
-            </td>
+            <td><%= number_to_currency(recipe_food.quantity * recipe_food.food.price) %></td>
+            <% if recipe_food.recipe.user_id == current_user.id%>
+              <td>
+                <%= link_to "Edit this food", edit_food_path(recipe_food.food_id), class: "btn-link" %> 
+                <%= button_to "Delete", [@recipe, recipe_food], method: :delete, class: "border border-0 text-decoration-underline text-primary" %>
+              <td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
