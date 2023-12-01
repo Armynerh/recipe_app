@@ -1,13 +1,27 @@
-<h1>Your Recipes</h1>
+<!-- app/views/user_recipes/index.html.erb -->
 
+<h1>Your Recipes</h1>
+ 
 <% if @recipes.present? %>
-  <ul>
+  <ul class="container">
     <% @recipes.each do |recipe| %>
-      <li>
-        <%= link_to recipe.title, user_recipe_path(recipe) %>
-      </li>
-    <% end %>
+  <li class="food-border">
+  <div>
+  <div>
+  <%= link_to recipe.name, recipe_path(recipe) %>
+  </div>
+    <div class='remove-div'>
+        <%= link_to 'REMOVE', recipe_path(recipe), data: { turbo_method: :delete, confirm:'are you sure you want to delete this?' } %>
+    </div>
+  </div>
+  <div>
+  <%= recipe.description%>
+  </div>
+  </li>
+<% end %>
   </ul>
 <% else %>
   <p>You haven't created any recipes yet.</p>
 <% end %>
+
+<%= link_to 'Create New Recipe', new_recipe_path, class: 'btn btn-success' %>
