@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @recipes = Recipe.where(public: true).or(Recipe.where(user: current_user))
+    @recipes = current_user.recipes
   end
 
   def show
@@ -36,7 +36,11 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe = Recipe.find(params[:id])
-    @recipe.destroy
-    redirect_to recipes_url, notice: 'Recipe was successfully destroyed.'
+    if current_user == @recipe.user
+      @recipe.destroy
+      redirect_to recipes_url, notice: 'Recipe was successfully destroyed.'
+    else
+      redirect_to recipes_url, alert: 'You are not authorized to destroy this recipe.'
+    end
   end
 end

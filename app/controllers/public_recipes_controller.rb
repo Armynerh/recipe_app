@@ -7,7 +7,11 @@ class PublicRecipesController < ApplicationController
 
   def destroy
     @recipe = Recipe.find(params[:id])
-    @recipe.destroy if current_user == @recipe.user
-    redirect_to public_recipes_path, notice: 'Recipe was successfully deleted.'
+    if current_user == @recipe.user
+      @recipe.destroy
+      redirect_to public_recipes_path, notice: 'Recipe was successfully deleted.'
+    else
+      redirect_to public_recipes_path, alert: 'You are not authorized to delete this recipe.'
+    end
   end
 end
