@@ -1,24 +1,37 @@
-# spec/requests/general_shopping_lists_spec.rb
+class GeneralShoppingListsController < ApplicationController
+  MissingFood = Struct.new(:food, :quantity)
 
-require 'rails_helper'
+  def index
+    @user = current_user
 
-RSpec.describe GeneralShoppingListsController, type: :request do
-  describe 'GET #index' do
-    let(:user) { create(:user) }
-
-    context 'when user is authenticated' do
-      before do
-        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    begin
+      @missing_foods = calculate_missing_foods(@user)
+      @shopping_list_items = @missing_foods.map do |item|
+        Struct.new(food: item.food, quantity: item.quantity)
       end
+      @total_food_items = @missing_foods.sum(&:quantity)
+      @total_price = @missing_foods.sum { |food| food.quantity * food.food.price }
+    rescue StandardError => e
+      Rails.logger.error("Error calculating missing foods: #{e.message}")
+      flash[:alert] = 'An error occurred while calculating missing foods.'
+      redirect_to root_path
+    end
+  end
 
-      it 'calculates missing foods and renders the index template' do
-        allow_any_instance_of(GeneralShoppingListsController)
-          .to receive(:calculate_missing_foods).with(user).and_return([])
+  private
 
-        get '/general_shopping_lists'
+  def calculate_missing_foods(user)
+    user_recipes = Recipe.where(user:).includes(:recipe_foods)
+    user_food_ids = user.foods.pluck(:id)
+    recipe_food_ids = RecipeFood.where(recipe: user_recipes).pluck(:food_id)
+    missing_food_ids = (recipe_food_ids - user_food_ids).uniq
+    missing_foods = Food.where(id: missing_food_ids).includes(:recipes)
 
-        expect(response).to render_template(:index)
-      end
+    missing_foods.map do |food|
+      MissingFood.new(
+        food,
+        user_recipes.sum { |recipe| recipe.recipe_foods.find_by(food:)&.quantity.to_i }
+      )
     end
   end
 end
