@@ -1,0 +1,23 @@
+<h1>List of Public Recipes</h1>
+
+<ul>
+  <% @public_recipes.each do |recipe| %>
+    <li class= 'food-border'>
+    <div>
+      <strong><%= link_to recipe.name, recipe_path(recipe) %></strong> <br>
+      Created by: <%= recipe.user.name %>
+
+      <% if current_user == recipe.user %>
+        <div>
+         <%= link_to 'Delete', recipe_path(recipe), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
+      <% end %>
+      </div>
+    <div>
+     <strong>Total Food Items:</strong> <%= recipe.total_food_items %><br>
+      <strong>Total Price:</strong> <%= number_to_currency(recipe.total_price) %>
+    </div>
+     
+    </li>
+  <% end %>
+</ul>
