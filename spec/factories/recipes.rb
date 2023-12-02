@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :recipe do
-    name { 'MyString' }
+    name { 'Maya' }
     preparation_time { 1 }
     cooking_time { 1 }
     description { 'MyText' }

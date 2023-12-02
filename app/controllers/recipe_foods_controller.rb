@@ -18,11 +18,11 @@ class RecipeFoodsController < ApplicationController
   end
 
   def edit
-    @recipe_food = RecipeFood.find(params[:id])
+    @recipe_food = @recipe.recipe_foods.includes(:food).find(params[:id])
   end
 
   def update
-    @recipe_food = RecipeFood.find(params[:id])
+    @recipe_food = @recipe.recipe_foods.find(params[:id])
 
     if @recipe_food.update(recipe_food_params)
       redirect_to @recipe, notice: 'Ingredient was successfully updated.'
