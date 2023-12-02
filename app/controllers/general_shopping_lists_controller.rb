@@ -8,7 +8,6 @@ RSpec.describe GeneralShoppingListsController, type: :request do
 
     context 'when user is authenticated' do
       before do
-       
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       end
 
@@ -16,10 +15,9 @@ RSpec.describe GeneralShoppingListsController, type: :request do
         allow_any_instance_of(GeneralShoppingListsController)
           .to receive(:calculate_missing_foods).with(user).and_return([])
 
-        get '/general_shopping_lists' 
+        get '/general_shopping_lists'
 
         expect(response).to render_template(:index)
-        
       end
     end
   end

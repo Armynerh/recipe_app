@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe FoodsController, type: :request do
   describe 'GET #index' do
     it 'renders the index template' do
-      user = create(:user) 
+      user = create(:user)
       sign_in user
 
       get foods_path

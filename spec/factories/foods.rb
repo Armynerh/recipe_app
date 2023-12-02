@@ -4,6 +4,6 @@ FactoryBot.define do
     measurement_unit { 'MyString' }
     price { '9.99' }
     quantity { 1 }
-    user { nil }
+    user { create(:user) }
   end
 end
