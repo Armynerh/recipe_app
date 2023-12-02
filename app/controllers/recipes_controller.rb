@@ -6,7 +6,7 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.includes(recipe_foods: :food).find(params[:id])
     redirect_to recipes_path unless @recipe.public || (user_signed_in? && current_user == @recipe.user)
   end
 
@@ -25,7 +25,7 @@ class RecipesController < ApplicationController
   end
 
   def edit
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.includes(recipe_foods: :food).find(params[:id])
   end
 
   def toggle_public
