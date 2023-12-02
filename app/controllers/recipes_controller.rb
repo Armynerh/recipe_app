@@ -34,7 +34,8 @@ class RecipesController < ApplicationController
       @recipe.update(public: !@recipe.public)
       redirect_back fallback_location: recipes_path
     else
-      redirect_back fallback_location: recipes_path, alert: 'You are not authorized to toggle the visibility of this recipe.'
+      redirect_back fallback_location: recipes_path,
+                    alert: 'You are not authorized to toggle the visibility of this recipe.'
     end
   end
 
