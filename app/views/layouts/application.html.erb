@@ -11,25 +11,26 @@
   </head>
 
   <body>
- <nav>
-    <ul>
-      <li><%= link_to 'Home', root_path %></li>
-      <li><%= link_to 'Foods', foods_path %></li>
-      <li><%= link_to 'Public Recipes', public_recipes_path %></li>
-      <% if @recipe&.id.present? %>
-        <li><%= link_to 'Recipe Details', recipe_path(@recipe) %></li>
-      <% end %>
-      <!-- Add other navigation links as needed -->
-    </ul>
-  </nav>
   <% if user_signed_in? %>
-  Welcome <%= current_user.name %>
+  <div class= "flex">
+<div>Welcome <%= current_user.name %></div>
+  <div>
   <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
+  </div>
+  </div>
+  
 <% else %>
   <%= link_to 'Sign up', new_user_registration_path %>
   <%= link_to 'Sign in', new_user_session_path %>
 <% end %>
-
+<nav>
+    <ul>
+      <li><%= link_to 'Home', root_path %></li>
+      <li><%= link_to 'Foods', foods_path %></li>
+      <li><%= link_to 'Public Recipes', public_recipes_path %></li>
+<li><%= link_to 'General Shopping List', general_shopping_lists_path %> </li>     <!-- Add other navigation links as needed -->
+    </ul>
+  </nav>
     <%= yield %>
   </body>
 </html>

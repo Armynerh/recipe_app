@@ -1,2 +1,0 @@
-class ShoppingListsController < ApplicationController
-end
