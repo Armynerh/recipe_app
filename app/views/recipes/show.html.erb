@@ -5,11 +5,12 @@
     <strong>Cooking Time:</strong> <%= @recipe.cooking_time %> minutes<br>
     <strong>Public:</strong> <%= @recipe.public ? 'Yes' : 'No' %><br>
   </p>
+  
+
+  <% if current_user == @recipe.user %>
   <%= button_to toggle_public_recipe_path(@recipe), method: :post, class: @recipe.public ? 'public' : 'private' do %>
     <%= @recipe.public ? 'Make Private' : 'Make Public' %>
   <% end %>
-
-  <% if current_user == @recipe.user %>
   <div class="flex">
       <%= link_to 'Get Shopping List',  general_shopping_lists_path(@recipe), method: :get, class: 'btn-link' %>
     <%= link_to 'Add Ingredients', new_recipe_recipe_food_path(@recipe), class: 'btn-link' %>
