@@ -3,15 +3,25 @@ class GeneralShoppingListsController < ApplicationController
 
   def index
     @user = current_user
-    @missing_foods = calculate_missing_foods(@user)
-    @total_food_items = @missing_foods.sum(&:quantity)
-    @total_price = @missing_foods.sum { |food| food.quantity * food.food.price }
+
+    begin
+      @missing_foods = calculate_missing_foods(@user)
+      @shopping_list_items = @missing_foods.map do |item|
+        OpenStruct.new(food: item.food, quantity: item.quantity)
+      end
+      @total_food_items = @missing_foods.sum(&:quantity)
+      @total_price = @missing_foods.sum { |food| food.quantity * food.food.price }
+    rescue StandardError => e
+      Rails.logger.error("Error calculating missing foods: #{e.message}")
+      flash[:alert] = 'An error occurred while calculating missing foods.'
+      redirect_to root_path
+    end
   end
 
   private
 
   def calculate_missing_foods(user)
-    user_recipes = Recipe.where(user: user)
+    user_recipes = Recipe.where(user: user).includes(:recipe_foods)
     user_food_ids = user.foods.pluck(:id)
     recipe_food_ids = RecipeFood.where(recipe: user_recipes).pluck(:food_id)
     missing_food_ids = (recipe_food_ids - user_food_ids).uniq

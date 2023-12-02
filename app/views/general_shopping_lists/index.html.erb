@@ -1,14 +1,23 @@
 <h1>General Shopping List</h1>
 
-<p>
-  <strong>Total Food Items:</strong> <%= @total_food_items %><br>
-  <strong>Total Price:</strong> <%= number_to_currency(@total_price) %>
-</p>
+<p>Total Food Items: <%= @total_food_items %></p>
+<p>Total Value: <%= number_to_currency(@total_value) %></p>
 
-<ul>
-  <% @missing_foods.each do |missing_food| %>
-    <li>
-      <%= missing_food.food.name %> - <%= missing_food.quantity %> items
-    </li>
-  <% end %>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th>Food</th>
+      <th>Total Quantity</th>
+      <th>Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shopping_list_items.each do |item| %>
+      <tr>
+        <td><%= item.food.name %></td>
+        <td><%= item.quantity %> <%= item.food.measurement_unit %></td>
+        <td><%= number_to_currency(item.quantity * item.food.price) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -107,3 +107,7 @@ nav ul li a:hover:not(.active) {
   justify-content: space-between;
   margin: 20px;
 }
+
+.edit-btn {
+  margin-right: 10px;
+}
