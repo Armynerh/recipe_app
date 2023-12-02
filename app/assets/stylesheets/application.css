@@ -58,18 +58,16 @@ nav ul li a {
   text-decoration: none;
 }
 
-
 nav ul li a:hover {
   background-color: #111;
 }
-
 
 nav ul li a:hover:not(.active) {
   background-color: #111;
 }
 
 .active {
-  background-color: #04AA6D;
+  background-color: #04aa6d;
 }
 
 .btn-link {
@@ -102,7 +100,7 @@ nav ul li a:hover:not(.active) {
   margin-top: 5px;
 }
 
-.flex{
+.flex {
   display: flex;
   justify-content: space-between;
   margin: 20px;

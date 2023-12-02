@@ -10,7 +10,10 @@
   <% end %>
 
   <% if current_user == @recipe.user %>
+  <div class="flex">
+      <%= link_to 'Get Shopping List',  general_shopping_lists_path(@recipe), method: :get, class: 'btn-link' %>
     <%= link_to 'Add Ingredients', new_recipe_recipe_food_path(@recipe), class: 'btn-link' %>
+  </div>
     <table>
       <thead>
         <tr>
@@ -28,7 +31,7 @@
             <td><%= number_to_currency(recipe_food.quantity * recipe_food.food.price) %></td>
             <% if recipe_food.recipe.user_id == current_user.id%>
               <td class='inline' style='display: flex;'>
-  <%= link_to "Modify", edit_food_path(recipe_food.food_id), class:''  %>
+  <%= link_to "Modify", edit_food_path(recipe_food.food_id), class:'edit-btn'  %>
   <%= button_to "Remove", [@recipe, recipe_food], method: :delete %>
 </td>
 

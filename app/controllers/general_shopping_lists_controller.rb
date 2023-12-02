@@ -7,7 +7,7 @@ class GeneralShoppingListsController < ApplicationController
     begin
       @missing_foods = calculate_missing_foods(@user)
       @shopping_list_items = @missing_foods.map do |item|
-        OpenStruct.new(food: item.food, quantity: item.quantity)
+        Struct.new(food: item.food, quantity: item.quantity)
       end
       @total_food_items = @missing_foods.sum(&:quantity)
       @total_price = @missing_foods.sum { |food| food.quantity * food.food.price }
@@ -21,7 +21,7 @@ class GeneralShoppingListsController < ApplicationController
   private
 
   def calculate_missing_foods(user)
-    user_recipes = Recipe.where(user: user).includes(:recipe_foods)
+    user_recipes = Recipe.where(user:).includes(:recipe_foods)
     user_food_ids = user.foods.pluck(:id)
     recipe_food_ids = RecipeFood.where(recipe: user_recipes).pluck(:food_id)
     missing_food_ids = (recipe_food_ids - user_food_ids).uniq
@@ -30,7 +30,7 @@ class GeneralShoppingListsController < ApplicationController
     missing_foods.map do |food|
       MissingFood.new(
         food,
-        user_recipes.sum { |recipe| recipe.recipe_foods.find_by(food: food)&.quantity.to_i }
+        user_recipes.sum { |recipe| recipe.recipe_foods.find_by(food:)&.quantity.to_i }
       )
     end
   end
